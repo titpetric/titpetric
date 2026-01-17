@@ -9,8 +9,7 @@ I'm currently working on the following projects:
 
 ![](./punchcard.png)
 
-I'm interested in best practices, codebase structure, component reuse
-and wiring together complex systems, database design and much more.
+(Legend: orange marks a repository becoming most active).
 
 My biggest goal in my current efforts is to make Go a friendly language
 for website development, with advancements over the experience of PHP or
@@ -23,10 +22,13 @@ Generally I'm working on:
 
 - Development tooling, code static analysis
 - Foundational packages, platforms, system design
-- Database APIs and interactions, SQL
-- Event driven systems and queues
-- Supporting command runner for testing
-- Docker and docker adjacent deployment methods
+- Database driven APIs and interactions, SQL schema design
+- Event driven systems and queues, distributed workers
+- Supporting command runner for testing, CI/CD, automation
+- Docker and docker adjacent delivery / deployment methods
+- Engineering leadership with solid technical foundations
+- Philosophy on ways of working with people or LLMs, process
+- Architectural, structural and strategic practices
 
 I like terminals but I consider web to be what people use. Using the
 terminal is fine for automation, but in general, people just want the
