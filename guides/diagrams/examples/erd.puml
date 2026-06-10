@@ -1,0 +1,15 @@
+@startuml
+entity User {
+  *id : UUID
+  --
+  email : string
+}
+
+entity Order {
+  *id : UUID
+  --
+  total : decimal
+}
+
+User ||--o{ Order
+@enduml

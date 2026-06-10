@@ -1,0 +1,10 @@
+@startuml
+interface Repository {
+  +save()
+  +findById()
+}
+
+class UserRepository
+
+Repository <|.. UserRepository
+@enduml

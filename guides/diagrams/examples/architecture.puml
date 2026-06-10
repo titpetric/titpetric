@@ -1,0 +1,26 @@
+@startuml
+actor User
+
+node "CDN" {
+  component Frontend
+}
+
+cloud "AWS" {
+
+  node "Kubernetes Cluster" {
+
+    component API
+    component Worker
+
+  }
+
+  database PostgreSQL
+  queue RabbitMQ
+}
+
+User --> Frontend
+Frontend --> API
+API --> PostgreSQL
+API --> RabbitMQ
+Worker --> RabbitMQ
+@enduml

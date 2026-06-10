@@ -1,0 +1,8 @@
+@startuml
+participant Frontend
+participant Backend
+database PostgreSQL
+
+Frontend -> Backend : Fetch Orders
+Backend -> PostgreSQL : SELECT *
+@enduml

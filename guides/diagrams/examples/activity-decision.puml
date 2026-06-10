@@ -1,0 +1,11 @@
+@startuml
+start
+
+if (Payment Valid?) then (Approved)
+  :Ship Order;
+else (Rejected)
+  :Notify Customer;
+endif
+
+stop
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+participant Client
+participant API
+
+Client -> API : Process Request
+activate API
+API --> Client : Response
+deactivate API
+@enduml

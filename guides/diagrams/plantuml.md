@@ -2,47 +2,101 @@
 
 ## Introduction
 
-[PlantUML](https://plantuml.com/) is a text-based diagramming language for generating UML diagrams, architecture diagrams, sequence flows, ERDs, state machines, and more.
+[PlantUML](https://plantuml.com/) is a text-based diagramming language for
+generating UML diagrams, architecture diagrams, sequence flows, ERDs, state
+machines, and more, all written in a compact, readable syntax wrapped in
+`@startuml` / `@enduml` blocks.
 
-Compared to MermaidJS, PlantUML offers:
+Each section below shows the **rendered diagram** first. Click **Show Code** to
+reveal the text syntax that produced it, so you can learn the syntax shape by
+shape without being overwhelmed by walls of code.
 
-* Richer UML support
-* Better enterprise architecture modeling
-* More advanced styling
-* More diagram types
-* Better skin/theme customization
-
-This guide covers:
-
-* Common UML shapes
-* Flowchart elements
-* Component modeling
-* Class diagrams
-* Sequence diagrams
-* State diagrams
-* Practical use cases
+> Every diagram in this guide is generated from a `.puml` file in
+> [`./examples`](./examples). The `.svg` images are rendered from those sources
+> with `plantuml -tsvg examples/*.puml`, so the source of truth and the picture
+> never drift apart.
 
 ---
 
-# 1. Basic Activity Diagram Shapes
+# 1. Cheat Sheet & Best Practices
 
-PlantUML activity diagrams are often used similarly to flowcharts.
+## Common Shapes
+
+Use shapes consistently — don't swap them interchangeably. Recommended keywords
+and their meaning:
+
+| Shape          | Keyword          | Meaning                          |
+| -------------- | ---------------- | -------------------------------- |
+| Actor          | `actor`          | Human or external system         |
+| Participant    | `participant`    | Service / internal system        |
+| Class          | `class`          | Object-oriented entity           |
+| Abstract Class | `abstract class` | Base / shared implementation     |
+| Interface      | `interface`      | Contract / behavior              |
+| Enum           | `enum`           | Fixed value set                  |
+| Component      | `component`      | Deployable unit / service        |
+| Node           | `node`           | Host / runtime container         |
+| Database       | `database`       | Persistent storage               |
+| Queue          | `queue`          | Message broker                   |
+| Artifact       | `artifact`       | Build output / file              |
+| Cloud          | `cloud`          | External / managed environment   |
+| Entity         | `entity`         | ERD table                        |
 
 ---
 
-## 1.1 Start and End Nodes
+## Relationship Arrows
 
-### Syntax
+PlantUML encodes relationship semantics in the arrow itself:
 
-```plantuml
-@startuml
-start
-:Initialize Application;
-stop
-@enduml
-```
+| Arrow  | Meaning      | Reads As                   |
+| ------ | ------------ | -------------------------- |
+| `<|--` | Inheritance  | "is-a"                     |
+| `*--`  | Composition  | strong ownership           |
+| `o--`  | Aggregation  | weak ownership             |
+| `..>`  | Dependency   | "uses" / temporary         |
+| `-->`  | Association  | directed link / data flow  |
+| `<|..` | Realization  | implements an interface    |
 
-### Example
+---
+
+## Pick the Right Diagram Type
+
+| Goal             | Recommended Diagram |
+| ---------------- | ------------------- |
+| API interactions | Sequence            |
+| Domain modeling  | Class               |
+| Infrastructure   | Component           |
+| Lifecycle        | State               |
+| Database schema  | ERD                 |
+| Workflow         | Activity            |
+
+---
+
+## Keep Diagrams Small
+
+Large diagrams become difficult to maintain. Prefer to:
+
+* Keep one responsibility per diagram
+* Separate runtime vs deployment concerns
+* Name components clearly (`AuthService`, not `Service1`)
+
+---
+
+# 2. Basic Activity Diagram Shapes
+
+PlantUML activity diagrams are used like flowcharts: `start` / `stop` mark
+boundaries and each `:Label;` is a step.
+
+---
+
+## 2.1 Start and End Nodes
+
+`start` and `stop` define where a workflow begins and ends. Use them for entry
+points, workflow boundaries, and lifecycle visualization.
+
+![Start and end nodes](./examples/activity-start-end.svg)
+
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
@@ -53,33 +107,19 @@ stop
 @enduml
 ```
 
-### Use Cases
-
-Use for:
-
-* Entry points
-* Workflow boundaries
-* Lifecycle visualization
-
-### Why Use It
-
-Clearly defines process beginning and termination.
+</details>
 
 ---
 
-## 1.2 Action / Process Block
+## 2.2 Action / Process Block
 
-### Syntax
+A `:Label;` is the standard processing step — business logic, operations,
+service execution, and generic workflow steps.
 
-```plantuml
-@startuml
-start
-:Validate Input;
-stop
-@enduml
-```
+![Action blocks](./examples/activity-action.svg)
 
-### Example
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
@@ -90,40 +130,19 @@ stop
 @enduml
 ```
 
-### Use Cases
-
-Use for:
-
-* Business logic
-* Operations
-* Service execution
-* Generic workflow steps
-
-### Why Use It
-
-Represents standard processing tasks.
+</details>
 
 ---
 
-## 1.3 Decision Node
+## 2.3 Decision Node
 
-### Syntax
+`if (...) then (...) else (...) endif` produces a branch — conditional logic,
+validation, and approval workflows.
 
-```plantuml
-@startuml
-start
+![Decision node](./examples/activity-decision.svg)
 
-if (User Authenticated?) then (yes)
-  :Load Dashboard;
-else (no)
-  :Redirect to Login;
-endif
-
-stop
-@enduml
-```
-
-### Example
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
@@ -139,39 +158,19 @@ stop
 @enduml
 ```
 
-### Use Cases
-
-Use for:
-
-* Conditional branching
-* Validation logic
-* Approval workflows
-
-### Why Use It
-
-Decision nodes visually separate logical branches.
+</details>
 
 ---
 
-## 1.4 Fork / Parallel Processing
+## 2.4 Fork / Parallel Processing
 
-### Syntax
+`fork` / `fork again` / `end fork` shows concurrent execution — asynchronous
+operations and event-driven systems.
 
-```plantuml
-@startuml
-start
+![Fork / parallel processing](./examples/activity-fork.svg)
 
-fork
-  :Send Email;
-fork again
-  :Generate Invoice;
-end fork
-
-stop
-@enduml
-```
-
-### Example
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
@@ -189,81 +188,52 @@ stop
 @enduml
 ```
 
-### Use Cases
-
-Use for:
-
-* Concurrent tasks
-* Asynchronous operations
-* Event-driven systems
-
-### Why Use It
-
-Clearly communicates parallel execution.
+</details>
 
 ---
 
-# 2. UML Class Diagram Shapes
+# 3. UML Class Diagram Shapes
 
 PlantUML excels at class modeling.
 
 ---
 
-## 2.1 Basic Class
+## 3.1 Basic Class
 
-### Syntax
+A `class` block defines attributes and methods in one place — domain models,
+object-oriented design, and API contracts.
 
-```plantuml
-@startuml
-class User
-@enduml
-```
+![Basic class](./examples/class-basic.svg)
 
-### Example
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
 class User {
   +String email
   +login()
   +logout()
 }
-
 @enduml
 ```
 
-### Use Cases
-
-Use for:
-
-* Domain models
-* Object-oriented design
-* API contracts
-
-### Why Use It
-
-Defines attributes and behaviors in one place.
+</details>
 
 ---
 
-## 2.2 Abstract Class
+## 3.2 Abstract Class
 
-### Syntax
+`abstract class` plus the `<|--` arrow clarifies inheritance and abstraction —
+shared base implementations and polymorphic systems.
 
-```plantuml
-@startuml
+![Abstract class](./examples/class-abstract.svg)
 
-abstract class Animal
-
-@enduml
-```
-
-### Example
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
 abstract class PaymentProvider {
   +authorize()
 }
@@ -273,41 +243,25 @@ class PayPalProvider
 
 PaymentProvider <|-- StripeProvider
 PaymentProvider <|-- PayPalProvider
-
 @enduml
 ```
 
-### Use Cases
-
-Use for:
-
-* Shared interfaces
-* Base implementations
-* Polymorphic systems
-
-### Why Use It
-
-Clarifies inheritance and abstraction.
+</details>
 
 ---
 
-## 2.3 Interface
+## 3.3 Interface
 
-### Syntax
+`interface` plus the `<|..` realization arrow separates behavior from
+implementation — dependency inversion, contracts, and plugin architectures.
 
-```plantuml
-@startuml
+![Interface](./examples/class-interface.svg)
 
-interface AuthService
-
-@enduml
-```
-
-### Example
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
 interface Repository {
   +save()
   +findById()
@@ -316,288 +270,242 @@ interface Repository {
 class UserRepository
 
 Repository <|.. UserRepository
-
 @enduml
 ```
 
-### Use Cases
-
-Use for:
-
-* Dependency inversion
-* Contracts
-* Plugin architectures
-
-### Why Use It
-
-Separates implementation from behavior.
+</details>
 
 ---
 
-## 2.4 Enumeration
+## 3.4 Enumeration
 
-### Syntax
+`enum` documents a restricted value set — fixed states, constants, and workflow
+stages.
+
+![Enumeration](./examples/class-enum.svg)
+
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
 enum Status {
   PENDING
   ACTIVE
   DISABLED
 }
-
 @enduml
 ```
 
-### Use Cases
-
-Use for:
-
-* Fixed state definitions
-* Constants
-* Workflow stages
-
-### Why Use It
-
-Documents restricted value sets.
+</details>
 
 ---
 
-# 3. Relationships
+# 4. Relationships
+
+The arrow carries the meaning. These four cover most modeling needs.
 
 ---
 
-## 3.1 Inheritance
+## 4.1 Inheritance
 
-### Example
+`<|--` represents an "is-a" relationship — shared behavior, polymorphism, and
+taxonomies.
+
+![Inheritance](./examples/rel-inheritance.svg)
+
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
 Animal <|-- Dog
 Animal <|-- Cat
-
 @enduml
 ```
 
-### Meaning
-
-Represents “is-a” relationships.
-
-### Use Cases
-
-Use for:
-
-* Shared behavior
-* Polymorphism
-* Taxonomies
+</details>
 
 ---
 
-## 3.2 Composition
+## 4.2 Composition
 
-### Example
+`*--` is strong ownership — the child cannot exist without the parent and shares
+its lifecycle.
+
+![Composition](./examples/rel-composition.svg)
+
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
 House *-- Room
-
 @enduml
 ```
 
-### Meaning
-
-Strong ownership.
-
-### Use Cases
-
-Use when:
-
-* Child lifecycle depends on parent
-* Objects cannot exist independently
+</details>
 
 ---
 
-## 3.3 Aggregation
+## 4.3 Aggregation
 
-### Example
+`o--` is weak ownership — related objects that still exist independently.
+
+![Aggregation](./examples/rel-aggregation.svg)
+
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
 Team o-- Player
-
 @enduml
 ```
 
-### Meaning
-
-Weak ownership.
-
-### Use Cases
-
-Use when:
-
-* Related objects exist independently
+</details>
 
 ---
 
-## 3.4 Dependency
+## 4.4 Dependency
 
-### Example
+`..>` is a temporary usage relationship — service calls, method usage, and loose
+coupling.
+
+![Dependency](./examples/rel-dependency.svg)
+
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
 Controller ..> Service
-
 @enduml
 ```
 
-### Meaning
-
-Temporary usage relationship.
-
-### Use Cases
-
-Use for:
-
-* Service calls
-* Method usage
-* Loose coupling
+</details>
 
 ---
 
-# 4. Sequence Diagram Elements
+# 5. Sequence Diagram Elements
 
-PlantUML sequence diagrams are among its strongest features.
+Sequence diagrams are among PlantUML's strongest features.
 
 ---
 
-## 4.1 Actors
+## 5.1 Actors
 
-### Example
+`actor` differentiates humans and external systems from internal components.
+
+![Sequence actor](./examples/sequence-actor.svg)
+
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
 actor User
 
 User -> API : Login Request
-
 @enduml
 ```
 
-### Use Cases
-
-Use for:
-
-* Humans
-* External systems
-* Third-party integrations
+</details>
 
 ---
 
-## 4.2 Participants
+## 5.2 Participants
 
-### Example
+`participant` and typed lifelines like `database` show communication flow
+between services, APIs, and storage.
+
+![Sequence participants](./examples/sequence-participants.svg)
+
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
 participant Frontend
 participant Backend
 database PostgreSQL
 
 Frontend -> Backend : Fetch Orders
 Backend -> PostgreSQL : SELECT *
-
 @enduml
 ```
 
-### Use Cases
-
-Use for:
-
-* Services
-* APIs
-* Databases
-* Internal systems
+</details>
 
 ---
 
-## 4.3 Activation Bars
+## 5.3 Activation Bars
 
-### Example
+`activate` / `deactivate` visualize how long a participant is doing work — useful
+for long-running or async operations.
+
+![Sequence activation bars](./examples/sequence-activation.svg)
+
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
+participant Client
 participant API
 
-API -> API : Process Request
+Client -> API : Process Request
 activate API
-
-API --> API : Response
+API --> Client : Response
 deactivate API
-
 @enduml
 ```
 
-### Use Cases
-
-Use for:
-
-* Long-running operations
-* Async handling
-* Internal processing visibility
+</details>
 
 ---
 
-# 5. Component Diagram Shapes
+# 6. Component Diagram Shapes
 
 ---
 
-## 5.1 Components
+## 6.1 Components
 
-### Example
+`component` and `database` describe system architecture and service maps at a
+high level.
+
+![Component diagram](./examples/component-basic.svg)
+
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
 component "Frontend App" as FE
 component "API Gateway" as API
 database PostgreSQL
 
 FE --> API
 API --> PostgreSQL
-
 @enduml
 ```
 
-### Use Cases
-
-Use for:
-
-* System architecture
-* Service mapping
-* Infrastructure diagrams
-
-### Why Use It
-
-Excellent for high-level architecture visualization.
+</details>
 
 ---
 
-## 5.2 Nodes (Infrastructure)
+## 6.2 Nodes (Infrastructure)
 
-### Example
+`node` groups components into deployment units — cloud topology and runtime
+layouts.
+
+![Infrastructure nodes](./examples/component-nodes.svg)
+
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
 node "Kubernetes Cluster" {
   component API
   component Worker
@@ -606,60 +514,48 @@ node "Kubernetes Cluster" {
 database PostgreSQL
 
 API --> PostgreSQL
-
 @enduml
 ```
 
-### Use Cases
-
-Use for:
-
-* Deployment architecture
-* Cloud topology
-* Infrastructure layouts
+</details>
 
 ---
 
-# 6. State Diagram Shapes
+# 7. State Diagram Shapes
 
----
+State diagrams are perfect for event-driven systems — workflow engines, UI state
+management, and lifecycle modeling. `[*]` marks the initial and final states.
 
-## Example
+![State machine](./examples/state-machine.svg)
+
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
 [*] --> Idle
 Idle --> Processing
 Processing --> Completed
 Completed --> [*]
-
 @enduml
 ```
 
-### Use Cases
-
-Use for:
-
-* Workflow engines
-* UI state management
-* Event-driven systems
-
-### Why Use It
-
-Clearly communicates state transitions.
+</details>
 
 ---
 
-# 7. Entity Relationship Diagrams
+# 8. Entity Relationship Diagrams
 
----
+`entity` blocks plus crow's-foot arrows (`||--o{`) communicate relational
+structure — database schema design, data modeling, and backend planning.
 
-## Example
+![Entity relationship diagram](./examples/erd.svg)
+
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
 entity User {
   *id : UUID
   --
@@ -673,77 +569,51 @@ entity Order {
 }
 
 User ||--o{ Order
-
 @enduml
 ```
 
-### Use Cases
-
-Use for:
-
-* Database schema design
-* Backend planning
-* Data modeling
+</details>
 
 ---
 
-# 8. Deployment Diagram Shapes
+# 9. Deployment Diagram Shapes
 
----
+`node`, `artifact`, and `database` document runtime topology and deployment
+planning.
 
-## Example
+![Deployment diagram](./examples/deployment.svg)
+
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
 node "Web Server" {
   artifact app.war
 }
 
 database "PostgreSQL"
 
-artifact app.war --> PostgreSQL
-
+app.war --> PostgreSQL
 @enduml
 ```
 
-### Use Cases
-
-Use for:
-
-* Infrastructure documentation
-* Runtime topology
-* Deployment planning
+</details>
 
 ---
 
-# 9. Common Shape Keywords
+# 10. Full Example Architecture Diagram
 
-| Shape          | Keyword        |
-| -------------- | -------------- |
-| Actor          | actor          |
-| Participant    | participant    |
-| Class          | class          |
-| Abstract Class | abstract class |
-| Interface      | interface      |
-| Enum           | enum           |
-| Component      | component      |
-| Node           | node           |
-| Database       | database       |
-| Queue          | queue          |
-| Artifact       | artifact       |
-| Package        | package        |
-| Folder         | folder         |
-| Cloud          | cloud          |
-| Frame          | frame          |
+A single diagram combining actors, nodes, clouds, components, a database, and a
+queue.
 
----
+![Full architecture diagram](./examples/architecture.svg)
 
-# 10. Architecture Example
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
 actor User
 
 node "CDN" {
@@ -768,148 +638,101 @@ Frontend --> API
 API --> PostgreSQL
 API --> RabbitMQ
 Worker --> RabbitMQ
-
 @enduml
 ```
+
+</details>
 
 ---
 
 # 11. Styling & Themes
 
-PlantUML supports themes and styling.
+PlantUML supports global styling through `skinparam` directives and, in newer
+releases, the `!theme` directive (e.g. `!theme spacelab`). Use styling to group
+environments, improve readability, match branding, and highlight critical paths.
 
 ---
 
-## Example Theme
+## 11.1 Global Skin Styling
+
+`skinparam` changes rendering globally — here a hand-drawn look with a custom
+background and rectangular components.
+
+![Global skin styling](./examples/theme.svg)
+
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-!theme spacelab
+skinparam handwritten true
+skinparam backgroundColor #FDFDFD
+skinparam componentStyle rectangle
 
 component API
 database PostgreSQL
 
 API --> PostgreSQL
-
 @enduml
 ```
 
+</details>
+
 ---
 
-## Custom Colors
+## 11.2 Custom Colors
+
+Inline `#Color` hints highlight individual elements.
+
+![Custom colors](./examples/custom-colors.svg)
+
+<details>
+<summary>Show Code</summary>
 
 ```plantuml
 @startuml
-
 skinparam componentStyle rectangle
 
 component API #LightBlue
 database PostgreSQL #LightGreen
 
+API --> PostgreSQL
 @enduml
 ```
 
-### Use Cases
-
-Use styling to:
-
-* Group environments
-* Improve readability
-* Match branding
-* Highlight critical paths
+</details>
 
 ---
 
-# 12. Best Practices
+# 12. Rendering the Examples
+
+All sources live in [`./examples`](./examples). Regenerate the SVGs after any
+edit:
+
+```bash
+plantuml -tsvg examples/*.puml
+```
+
+This keeps each `.svg` next to its `.puml` source, so diagrams in this guide
+never go stale.
 
 ---
 
-## Use Appropriate Diagram Types
+# 13. Official Resources
 
-| Goal             | Recommended Diagram |
-| ---------------- | ------------------- |
-| API interactions | Sequence            |
-| Domain modeling  | Class               |
-| Infrastructure   | Component           |
-| Lifecycle        | State               |
-| Database schema  | ERD                 |
-| Workflow         | Activity            |
-
----
-
-## Keep Diagrams Focused
-
-Avoid giant “everything” diagrams.
-
-Recommended:
-
-* One responsibility per diagram
-* Modular architecture views
-* Separate runtime vs deployment concerns
-
----
-
-## Name Components Clearly
-
-Prefer:
-
-* `AuthService`
-* `PaymentGateway`
-* `NotificationWorker`
-
-Avoid:
-
-* `Service1`
-* `Thing`
-* `Manager`
-
----
-
-# 13. PlantUML vs MermaidJS
-
-| Feature               | MermaidJS | PlantUML  |
-| --------------------- | --------- | --------- |
-| Simplicity            | Excellent | Good      |
-| UML Depth             | Moderate  | Excellent |
-| Styling               | Basic     | Advanced  |
-| Architecture Modeling | Moderate  | Excellent |
-| IDE Integration       | Good      | Excellent |
-| Git Rendering         | Excellent | Good      |
-| Enterprise Diagrams   | Moderate  | Excellent |
-
----
-
-# 14. Official Resources
-
-Official Site:
-
-* https://plantuml.com/
-
-Online Editor:
-
-* https://www.plantuml.com/plantuml/
-
-Hitchhiker's Guide:
-
-* https://crashedmind.github.io/PlantUMLHitchhikersGuide/
+* Official Site: https://plantuml.com/
+* Online Editor: https://www.plantuml.com/plantuml/
+* Hitchhiker's Guide: https://crashedmind.github.io/PlantUMLHitchhikersGuide/
 
 ---
 
 # Conclusion
 
-PlantUML is one of the most powerful text-based UML tools available.
+PlantUML is one of the most powerful text-based UML tools available. It excels at
+enterprise architecture, rich UML modeling, sequence diagrams, infrastructure
+visualization, and large-scale software documentation.
 
-It excels at:
-
-* Enterprise architecture
-* Rich UML modeling
-* Sequence diagrams
-* Infrastructure visualization
-* Large-scale software documentation
-
-PlantUML is ideal when you need:
-
-* Precise UML semantics
-* Large architecture diagrams
-* Advanced customization
-* Long-term maintainable technical documentation
+Reach for PlantUML when you need precise UML semantics, large architecture
+diagrams, advanced customization, and long-term maintainable technical
+documentation. The best diagrams use consistent semantics and minimal visual
+complexity while keeping the source of truth and the rendered image in sync.

@@ -1,0 +1,13 @@
+@startuml
+start
+
+fork
+  :Cache User Session;
+fork again
+  :Log Audit Event;
+fork again
+  :Send Metrics;
+end fork
+
+stop
+@enduml

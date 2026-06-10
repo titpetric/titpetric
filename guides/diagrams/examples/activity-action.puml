@@ -1,0 +1,6 @@
+@startuml
+start
+:Authenticate User;
+:Load Dashboard;
+stop
+@enduml

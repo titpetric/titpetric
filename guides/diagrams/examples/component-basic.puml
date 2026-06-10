@@ -1,0 +1,8 @@
+@startuml
+component "Frontend App" as FE
+component "API Gateway" as API
+database PostgreSQL
+
+FE --> API
+API --> PostgreSQL
+@enduml

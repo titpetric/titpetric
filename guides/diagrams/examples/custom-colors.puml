@@ -1,0 +1,8 @@
+@startuml
+skinparam componentStyle rectangle
+
+component API #LightBlue
+database PostgreSQL #LightGreen
+
+API --> PostgreSQL
+@enduml

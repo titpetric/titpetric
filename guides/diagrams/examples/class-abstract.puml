@@ -1,0 +1,11 @@
+@startuml
+abstract class PaymentProvider {
+  +authorize()
+}
+
+class StripeProvider
+class PayPalProvider
+
+PaymentProvider <|-- StripeProvider
+PaymentProvider <|-- PayPalProvider
+@enduml

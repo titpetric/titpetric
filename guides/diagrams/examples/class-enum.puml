@@ -1,0 +1,7 @@
+@startuml
+enum Status {
+  PENDING
+  ACTIVE
+  DISABLED
+}
+@enduml

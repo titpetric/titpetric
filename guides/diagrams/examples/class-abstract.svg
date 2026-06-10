@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="190px" preserveAspectRatio="none" style="width:280px;height:190px;" version="1.1" viewBox="0 0 280 190" width="280px" zoomAndPan="magnify"><defs><filter height="300%" id="f1ecurgt598x27" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[bff07eb3cd588b4dd63b04417073d969]
+class PaymentProvider--><rect fill="#FEFECE" filter="url(#f1ecurgt598x27)" height="62.9819" id="PaymentProvider" style="stroke: #A80036; stroke-width: 1.5;" width="126" x="73" y="8.02"/><ellipse cx="88" cy="24.02" fill="#A9DCDF" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M88.1094,19.3638 L86.9531,24.4419 L89.2813,24.4419 L88.1094,19.3638 Z M86.625,17.1294 L89.6094,17.1294 L92.9688,29.52 L90.5156,29.52 L89.75,26.4575 L86.4688,26.4575 L85.7188,29.52 L83.2813,29.52 L86.625,17.1294 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="94" x="102" y="28.676">PaymentProvider</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="74" x2="198" y1="40.02" y2="40.02"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="74" x2="198" y1="48.02" y2="48.02"/><ellipse cx="84" cy="59.02" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="56" x="93" y="63.7789">authorize()</text><!--MD5=[d21f67a41b4f76d91328184752c87c25]
+class StripeProvider--><rect fill="#FEFECE" filter="url(#f1ecurgt598x27)" height="48" id="StripeProvider" style="stroke: #A80036; stroke-width: 1.5;" width="112" x="6" y="131"/><ellipse cx="21" cy="147" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M23.9688,152.6406 Q23.3906,152.9375 22.75,153.0781 Q22.1094,153.2344 21.4063,153.2344 Q18.9063,153.2344 17.5781,151.5938 Q16.2656,149.9375 16.2656,146.8125 Q16.2656,143.6875 17.5781,142.0313 Q18.9063,140.375 21.4063,140.375 Q22.1094,140.375 22.75,140.5313 Q23.4063,140.6875 23.9688,140.9844 L23.9688,143.7031 Q23.3438,143.125 22.75,142.8594 Q22.1563,142.5781 21.5313,142.5781 Q20.1875,142.5781 19.5,143.6563 Q18.8125,144.7188 18.8125,146.8125 Q18.8125,148.9063 19.5,149.9844 Q20.1875,151.0469 21.5313,151.0469 Q22.1563,151.0469 22.75,150.7813 Q23.3438,150.5 23.9688,149.9219 L23.9688,152.6406 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="80" x="35" y="151.656">StripeProvider</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="117" y1="163" y2="163"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="117" y1="171" y2="171"/><!--MD5=[04bff79b3325aebbe1c4e00ad2d93d39]
+class PayPalProvider--><rect fill="#FEFECE" filter="url(#f1ecurgt598x27)" height="48" id="PayPalProvider" style="stroke: #A80036; stroke-width: 1.5;" width="116" x="153" y="131"/><ellipse cx="168" cy="147" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M170.9688,152.6406 Q170.3906,152.9375 169.75,153.0781 Q169.1094,153.2344 168.4063,153.2344 Q165.9063,153.2344 164.5781,151.5938 Q163.2656,149.9375 163.2656,146.8125 Q163.2656,143.6875 164.5781,142.0313 Q165.9063,140.375 168.4063,140.375 Q169.1094,140.375 169.75,140.5313 Q170.4063,140.6875 170.9688,140.9844 L170.9688,143.7031 Q170.3438,143.125 169.75,142.8594 Q169.1563,142.5781 168.5313,142.5781 Q167.1875,142.5781 166.5,143.6563 Q165.8125,144.7188 165.8125,146.8125 Q165.8125,148.9063 166.5,149.9844 Q167.1875,151.0469 168.5313,151.0469 Q169.1563,151.0469 169.75,150.7813 Q170.3438,150.5 170.9688,149.9219 L170.9688,152.6406 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="84" x="182" y="151.656">PayPalProvider</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="154" x2="268" y1="163" y2="163"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="154" x2="268" y1="171" y2="171"/><!--MD5=[3e91f846cbb475e4cdee2bfad6b3bb42]
+reverse link PaymentProvider to StripeProvider--><path d="M104.43,88.93 C94.95,103.46 85,118.73 77.11,130.83 " fill="none" id="PaymentProvider&lt;-StripeProvider" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="none" points="98.36,85.42,115.15,72.49,110.09,93.07,98.36,85.42" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[73f686287b1201d18de6e89155926d17]
+reverse link PaymentProvider to PayPalProvider--><path d="M168,88.93 C177.6,103.46 187.69,118.73 195.69,130.83 " fill="none" id="PaymentProvider&lt;-PayPalProvider" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="none" points="162.32,93.03,157.13,72.48,174,85.31,162.32,93.03" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[9587b9874e677adff80b2f3059599a86]
+@startuml
+abstract class PaymentProvider {
+  +authorize()
+}
+
+class StripeProvider
+class PayPalProvider
+
+PaymentProvider <|- - StripeProvider
+PaymentProvider <|- - PayPalProvider
+@enduml
+
+PlantUML version 1.2020.02(Sun Mar 01 11:22:07 CET 2020)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 25.0.3+9-2-26.04.2-Ubuntu
+Operating System: Linux
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

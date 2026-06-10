@@ -1,0 +1,10 @@
+@startuml
+skinparam handwritten true
+skinparam backgroundColor #FDFDFD
+skinparam componentStyle rectangle
+
+component API
+database PostgreSQL
+
+API --> PostgreSQL
+@enduml

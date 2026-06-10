@@ -1,0 +1,9 @@
+@startuml
+node "Web Server" {
+  artifact app.war
+}
+
+database "PostgreSQL"
+
+app.war --> PostgreSQL
+@enduml

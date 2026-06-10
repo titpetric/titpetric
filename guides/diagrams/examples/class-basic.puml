@@ -1,0 +1,7 @@
+@startuml
+class User {
+  +String email
+  +login()
+  +logout()
+}
+@enduml

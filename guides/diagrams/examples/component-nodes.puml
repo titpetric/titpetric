@@ -1,0 +1,10 @@
+@startuml
+node "Kubernetes Cluster" {
+  component API
+  component Worker
+}
+
+database PostgreSQL
+
+API --> PostgreSQL
+@enduml
