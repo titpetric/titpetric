@@ -2,33 +2,27 @@
 
 I'm a systems architect and engineer. I work with Go professionally over
 10 years. I'm currently working on several open source projects pinned
-below. My experience is extensive, and my focus for 2026 is to make web
-development experiences with Go without reaching for the Node runtime.
+below.
 
-I'm currently working on the following projects:
+I'm currently working on the following open-source projects:
 
-![](./punchcard.png)
+- [phpscript](https://github.com/titpetric/phpscript) - A performance optimized PHP syntax runtime
+- [oida](https://github.com/titpetric/oida) - in-process telemetry for go applications
+- [task-ui](https://github.com/titpetric/task-ui) - an automation platform for homelabs, team features
 
-(Legend: orange marks a repository becoming most active).
+I am currently working on the following closed-source projects:
 
-My biggest goal in my current efforts is to make Go a friendly language
-for website development, with advancements over the experience of PHP or
-NodeJS projects. For this purpose I'm writing the [Vuego template
-engine](https://github.com/titpetric/vuego) and provide [The Vuego
-Tour](https://vuego.incubator.to) for people to play with the VueJS
-inspired syntax.
+- [goqu.incubator.to](https://goqu.incubator.to) - Go quality analysis of repositories (TODO: rename)
+- [incubator.to](https://incubator.to) - Incubator, a place for publishing updates, no-ads, SaaS, non-free
+- [blacksky.digital](https://blacksky.digital) - Custom website and application development, SEO
 
-Generally I'm working on:
+I am providing consultancy for performance evaluation, testing evaluation, strategic application development.
 
-- Development tooling, code static analysis
-- Foundational packages, platforms, system design
-- Database driven APIs and interactions, SQL schema design
-- Event driven systems and queues, distributed workers
-- Supporting command runner for testing, CI/CD, automation
-- Docker and docker adjacent delivery / deployment methods
-- Engineering leadership with solid technical foundations
-- Philosophy on ways of working with people or LLMs, process
-- Architectural, structural and strategic practices
+In addition to that I'm available for integration work:
+
+- Do you want to integrate phpscript as your application server?
+- Do you want to adopt Task UI in your organisation as the self-hosted CI/CD?
+- Are you a virtual hosting provider that would adopt phpscript?
 
 I like terminals but I consider web to be what people use. Using the
 terminal is fine for automation, but in general, people just want the
