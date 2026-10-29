@@ -1,0 +1,2 @@
+# atkins records every run in this database; it is local state, not config.
+.atkins/atkins.db
