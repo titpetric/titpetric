@@ -16,41 +16,38 @@ vars:
     goos: [linux]
     goarch: [amd64]
 
-jobs:
+tasks:
   default:
-    passthru: true
     desc: "Print latest release tag"
-    steps:
-      - run: echo "Latest git tag ${{semver}}"
+    cmds:
+      - cmd: echo "Latest git tag ${{semver}}"
       - task: build
       - task: test
 
   build:
     desc: "Build assets required for release"
-    passthru: true
-    steps:
+    cmds:
       - task: docker:build
 
   test:
     desc: "Run tests required for release"
-    passthru: true
-    steps:
+    cmds:
       - task: docker:test
 
   publish:
     desc: "Publish release assets"
     aliases: [publish]
-    steps:
+    cmds:
       - if: semver != ""
         task: publish:github
       - task: docker:push
 
   publish:github:
     desc: "Create a GitHub release"
-    steps:
-      - run: echo "Last release [${{semver}}]"
+    cmds:
+      - cmd: echo "Last release [${{semver}}]"
       - gh release create ${{ semver }} --title ${{semver}} --notes "Release ${{semver}}" || true
       - for:
           - goos in ${{build.goos}}
           - goarch in ${{build.goarch}}
-        run: gh release upload --clobber ${{ semver }} ./bin/${{name}}-${{goos}}-${{goarch}}
+        cmd: gh release upload --clobber ${{ semver }} ./bin/${{name}}-${{goos}}-${{goarch}}

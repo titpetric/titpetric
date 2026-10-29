@@ -11,20 +11,18 @@ vars:
   input: view/assets/css/input.css
   output: view/assets/css/tailwind.css
 
-jobs:
+tasks:
   setup:
     desc: "Install Tailwind CSS dependencies"
-    steps:
+    cmds:
       - npm install -D tailwindcss@3 postcss autoprefixer
 
   generate:
     desc: "Generate Tailwind CSS"
-    passthru: true
-    steps:
-      - run: tailwindcss -i ${{input}} -o ${{output}}
+    cmds:
+      - cmd: tailwindcss -i ${{input}} -o ${{output}}
 
   watch:
     desc: "Watch and regenerate CSS on changes"
-    passthru: true
-    steps:
-      - run: tailwindcss -i ${{input}} -o ${{output}} --watch
+    cmds:
+      - cmd: tailwindcss -i ${{input}} -o ${{output}} --watch

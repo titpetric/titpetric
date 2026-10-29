@@ -9,39 +9,33 @@ when:
     - compose.yml
     - docker-compose.yml
 
-jobs:
+tasks:
   up:
     desc: "Bring up env"
-    passthru: true
-    steps:
+    cmds:
       - docker compose up -d --remove-orphans --wait
 
   down:
     desc: "Stop env"
-    passthru: true
-    steps:
+    cmds:
       - docker compose down --remove-orphans
 
   build:
     desc: "Build env (if build: in compose)"
-    passthru: true
-    steps:
+    cmds:
       - docker compose build
 
   pull:
     desc: "Pull env images"
-    passthru: true
-    steps:
+    cmds:
       - docker compose pull
 
   ps:
     desc: "Show env status"
-    passthru: true
-    steps:
+    cmds:
       - docker compose ps
 
   logs:
     desc: "Tail env logs"
-    passthru: true
-    steps:
+    cmds:
       - docker compose logs -f --tail=200

@@ -18,7 +18,6 @@ tasks:
 
   fmt:
     desc: "Run mdox to format markdowns"
-    passthru: true
     cmds:
       - if: $(test -d docs)
         cmd: mdox fmt ${{ files }} || true
@@ -29,7 +28,6 @@ tasks:
 
   lint:
     desc: "Run vale to lint language"
-    passthru: true
     vars:
       files: $(find ./docs -name '*.md' 2>/dev/null | xargs --no-run-if-empty echo || true)
       # vale reads .vale.ini from the working directory, and the file sits at
