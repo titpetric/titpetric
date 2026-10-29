@@ -15,7 +15,7 @@ vars:
 
 tasks:
   build:
-    desc: "Build Docker image"
+    desc: "Build the image and tag it with the git tag and latest"
     cmds:
       - if: semver != ""
         cmd:
@@ -24,7 +24,7 @@ tasks:
           docker buildx build --platform linux/amd64 --no-cache --build-arg NAME=${{name}} -t ${{image}}:latest -f docker/Dockerfile .
 
   push:
-    desc: "Push Docker image"
+    desc: "Push latest, and the git tag when HEAD is that tag"
     cmds:
       - cmd: docker push ${{image}}:latest
       # Only push the tag when HEAD is exactly the tagged commit; if the local
@@ -35,7 +35,7 @@ tasks:
         cmd: docker push ${{image}}:${{semver}}
 
   test:
-    desc: "Test Docker image"
+    desc: "Build Dockerfile.test and run the image with --help"
     if: $(test -f docker/Dockerfile.test)
     cmds:
       - if: $(test -f docker/Dockerfile.test)

@@ -1,6 +1,6 @@
 name: Markdown formatting and linting
 help: >-
-  Formats and checks the markdown under docs/ and README.md with mdox, and
+  Formats docs/ and README.md with mdox, checks that docs/ is formatted, and
   runs vale over both when .vale.ini is present. mdox:fmt rewrites the files
   in place; mdox:lint only reports.
 
@@ -12,12 +12,12 @@ when:
 
 tasks:
   default:
-    desc: "Run mdox to check markdowns"
+    desc: "Check the markdown formatting and language"
     cmds:
       - task: lint
 
   fmt:
-    desc: "Run mdox to format markdowns"
+    desc: "Rewrite docs/ and README.md in mdox format"
     cmds:
       - if: $(test -d docs)
         cmd: mdox fmt ${{ files }} || true
@@ -27,7 +27,7 @@ tasks:
         cmd: mdox fmt README.md
 
   lint:
-    desc: "Run vale to lint language"
+    desc: "Check docs/ formatting and run vale over the markdown"
     vars:
       files: $(find ./docs -name '*.md' 2>/dev/null | xargs --no-run-if-empty echo || true)
       # vale reads .vale.ini from the working directory, and the file sits at
@@ -41,7 +41,7 @@ tasks:
         cmd: docker run --rm -v $PWD:/src -w /src jdkato/vale ${{ targets }}
 
   setup:
-    desc: "Install bwplotka/mdox"
+    desc: "Install mdox from the main branch"
     interactive: true
     cmds:
       - go install github.com/bwplotka/mdox@main

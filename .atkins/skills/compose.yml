@@ -11,31 +11,31 @@ when:
 
 tasks:
   up:
-    desc: "Bring up env"
+    desc: "Start the services and wait for them to be healthy"
     cmds:
       - docker compose up -d --remove-orphans --wait
 
   down:
-    desc: "Stop env"
+    desc: "Stop the services and remove their containers"
     cmds:
       - docker compose down --remove-orphans
 
   build:
-    desc: "Build env (if build: in compose)"
+    desc: "Build the services that declare a build context"
     cmds:
       - docker compose build
 
   pull:
-    desc: "Pull env images"
+    desc: "Pull the service images"
     cmds:
       - docker compose pull
 
   ps:
-    desc: "Show env status"
+    desc: "List the services and their state"
     cmds:
       - docker compose ps
 
   logs:
-    desc: "Tail env logs"
+    desc: "Follow the logs from the last 200 lines"
     cmds:
       - docker compose logs -f --tail=200

@@ -24,7 +24,7 @@ env:
 
 tasks:
   build:
-    desc: "Build app"
+    desc: "Build bin/<name>-<goos>-<goarch> over the matrix"
     vars:
       matrix:
         goos: [linux]
@@ -42,7 +42,7 @@ tasks:
         cmd: go build -trimpath -ldflags="-X 'main.Version=${GIT_TAG}' -X 'main.Commit=${GIT_COMMIT}' -X 'main.CommitTime=${GIT_TIME}' -X 'main.Branch=${GIT_BRANCH}' -X 'main.Modified=${GIT_MODIFIED}'" -o bin/${{name}}-${GOOS}-${GOARCH} ${{buildPath}}
 
   fmt:
-    desc: "Format the code"
+    desc: "Group the imports with splint and tidy the module"
     cmds:
       # One pass over a data model of the source: every import block grouped
       # and ordered, an import nothing reaches taken out, and an import a
@@ -51,22 +51,22 @@ tasks:
       - go mod tidy
 
   lint:
-    desc: "Lint the code"
+    desc: "Report the splint findings without failing"
     cmds:
       - splint ./... || true
 
   default:
-    desc: "Go lifecycle"
+    desc: "Generate, format, lint, test and build"
     depends_on: [generate, fmt, lint, test, build]
 
   generate:
-    desc: "Run go generate/fix"
+    desc: "Run go generate and go fix over the module"
     cmds:
       - go generate ./...
       - go fix ./...
 
   test:
-    desc: "Run tests"
+    desc: "Run the tests and write the coverage profile pkg.cov"
     cmds:
       # Package list last: gotestsum hands everything after -- to go test, and
       # -coverprofile writes nothing without a word of complaint when the list

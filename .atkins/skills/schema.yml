@@ -12,7 +12,7 @@ vars:
 
 tasks:
   migrate:
-    desc: "Run module migrations"
+    desc: "Apply the migrations and regenerate the docs and models"
     aliases: [migrate]
     env:
       vars:

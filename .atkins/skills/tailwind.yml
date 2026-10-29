@@ -13,16 +13,16 @@ vars:
 
 tasks:
   setup:
-    desc: "Install Tailwind CSS dependencies"
+    desc: "Install Tailwind 3, postcss and autoprefixer"
     cmds:
       - npm install -D tailwindcss@3 postcss autoprefixer
 
   generate:
-    desc: "Generate Tailwind CSS"
+    desc: "Generate tailwind.css from input.css"
     cmds:
       - cmd: tailwindcss -i ${{input}} -o ${{output}}
 
   watch:
-    desc: "Watch and regenerate CSS on changes"
+    desc: "Regenerate tailwind.css on every change to the input"
     cmds:
       - cmd: tailwindcss -i ${{input}} -o ${{output}} --watch

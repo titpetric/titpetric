@@ -18,24 +18,24 @@ vars:
 
 tasks:
   default:
-    desc: "Print latest release tag"
+    desc: "Print the newest tag, then build and test the assets"
     cmds:
       - cmd: echo "Latest git tag ${{semver}}"
       - task: build
       - task: test
 
   build:
-    desc: "Build assets required for release"
+    desc: "Build the docker image for the release"
     cmds:
       - task: docker:build
 
   test:
-    desc: "Run tests required for release"
+    desc: "Run the docker image test for the release"
     cmds:
       - task: docker:test
 
   publish:
-    desc: "Publish release assets"
+    desc: "Create the GitHub release and push the docker image"
     aliases: [publish]
     cmds:
       - if: semver != ""
@@ -43,7 +43,7 @@ tasks:
       - task: docker:push
 
   publish:github:
-    desc: "Create a GitHub release"
+    desc: "Create the release and upload the binaries from bin/"
     cmds:
       - cmd: echo "Last release [${{semver}}]"
       - gh release create ${{ semver }} --title ${{semver}} --notes "Release ${{semver}}" || true
