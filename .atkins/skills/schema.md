@@ -1,0 +1,1 @@
+`atkins schema:migrate` never touches a real database. It applies `schema/*.up.sql` to a throwaway SQLite file named after the directory and deletes it on the way out; the point of the run is the generated output. `schema/docs`, `schema/schema.yml` and the Go models under `model/` are rewritten every time, so edit the migrations, not those files.

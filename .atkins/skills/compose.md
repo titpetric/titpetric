@@ -1,0 +1,1 @@
+`atkins compose:up` waits for the containers to report healthy, so a service with a slow or missing healthcheck holds the job open until it times out. Every job runs with `--remove-orphans`, which deletes containers in the project that the current `compose.yml` no longer declares.
