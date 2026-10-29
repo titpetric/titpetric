@@ -1,2 +1,6 @@
 # atkins records every run in this database; it is local state, not config.
 .atkins/atkins.db
+
+# go:build and go:test write these.
+bin/
+pkg.cov
