@@ -1,0 +1,30 @@
+name: Tailwind CSS generation
+help: >-
+  Generates view/assets/css/tailwind.css from view/assets/css/input.css. Reads
+  tailwind.config.js; tailwind:watch keeps regenerating on change.
+
+when:
+  files:
+    - tailwind.config.js
+
+vars:
+  input: view/assets/css/input.css
+  output: view/assets/css/tailwind.css
+
+jobs:
+  setup:
+    desc: "Install Tailwind CSS dependencies"
+    steps:
+      - npm install -D tailwindcss@3 postcss autoprefixer
+
+  generate:
+    desc: "Generate Tailwind CSS"
+    passthru: true
+    steps:
+      - run: tailwindcss -i ${{input}} -o ${{output}}
+
+  watch:
+    desc: "Watch and regenerate CSS on changes"
+    passthru: true
+    steps:
+      - run: tailwindcss -i ${{input}} -o ${{output}} --watch
