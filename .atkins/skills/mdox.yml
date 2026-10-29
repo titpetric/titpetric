@@ -1,8 +1,8 @@
 name: Markdown formatting and linting
 help: >-
   Formats docs/ and README.md with mdox, checks that docs/ is formatted, and
-  runs vale over both when .vale.ini is present. mdox:fmt rewrites the files
-  in place; mdox:lint only reports.
+  runs vale over the tree when .vale.ini is present. mdox:fmt rewrites the
+  files in place; mdox:lint only reports.
 
 when:
   files:
@@ -27,18 +27,19 @@ tasks:
         cmd: mdox fmt README.md
 
   lint:
-    desc: "Check docs/ formatting and run vale over the markdown"
+    desc: "Check docs/ formatting and run vale over the tree"
     vars:
       files: $(find ./docs -name '*.md' 2>/dev/null | xargs --no-run-if-empty echo || true)
-      # vale reads .vale.ini from the working directory, and the file sits at
-      # the repository root, not under docs/. Mount the whole tree so the
-      # config is in reach and both README.md and docs/ can be scanned.
-      targets: $(ls -d README.md docs 2>/dev/null | xargs --no-run-if-empty echo || true)
     cmds:
       - if: $(test -d docs)
         cmd: mdox fmt --check ${{ files }}
-      - if: $(test -f .vale.ini && test -n "$(ls -d README.md docs 2>/dev/null)")
-        cmd: docker run --rm -v $PWD:/src -w /src jdkato/vale ${{ targets }}
+      # vale reads .vale.ini and .vale/styles from the working directory, so it
+      # runs at the repository root and walks the whole tree rather than a list
+      # of documents. The sections in .vale.ini pick the files, markdown and
+      # code alike: a doc comment is prose, and the pages under docs/ are
+      # generated from the comments a docs-only scan would never read.
+      - if: $(test -f .vale.ini)
+        cmd: docker run --rm -v $PWD:/src -w /src jdkato/vale --output=line .
 
   setup:
     desc: "Install mdox from the main branch"

@@ -40,7 +40,7 @@ source file.
 | `docker.yml`   | `docker/Dockerfile`                 | buildx build, tag with the newest git tag and `latest`  |
 | `compose.yml`  | `compose.yml`, `docker-compose.yml` | up, down, build, pull, ps, logs                         |
 | `release.yml`  | `.github/`, `docker/Dockerfile`     | cut a GitHub release and upload the binaries in `bin/`  |
-| `mdox.yml`     | `.vale.ini`, `docs/`, `README.md`   | format and check markdown, run vale                     |
+| `mdox.yml`     | `.vale.ini`, `docs/`, `README.md`   | format markdown, run vale over the markdown and the code |
 | `schema.yml`   | `schema/*.up.sql`                   | apply migrations, regenerate schema docs and Go models  |
 | `tailwind.yml` | `tailwind.config.js`                | generate `tailwind.css`, or watch and regenerate        |
 
@@ -55,6 +55,28 @@ with buildx; `release.yml` needs an authenticated
 [mdox](https://github.com/bwplotka/mdox), which `mdox:setup` installs;
 `schema.yml` needs [mig](https://github.com/go-bridget/mig);
 `tailwind.yml` needs the `tailwindcss` CLI.
+
+## The prose rules
+
+`mdox:lint` runs vale at the repository root and lets it walk the tree.
+The `.vale.ini` and the `llm-slop` style at the root of this repository
+are the copy to start from: the style holds thirty-nine rules and the
+config holds them against the markdown and the code together, `.go`,
+`.php`, `.js`, `.css`, `.sql` and the rest, because vale reads the
+comments and strings out of each.
+
+Scanning only `docs/` reads the wrong file. Documentation is generated
+from doc comments as often as it is written by hand, so a markdown-only
+scan reports the generated page while the comment it came from goes
+unread. The config excludes what nobody here writes: `vendor/`,
+`node_modules/`, `testdata/`, `.claude/` and generated Go
+(`*_templ.go`, `*.mig.go`, `*.pb.go`).
+
+Copy both into a repository to use them:
+
+```
+cp -r titpetric/.vale.ini titpetric/.vale <your-repo>/
+```
 
 ## Forking
 
