@@ -6,8 +6,10 @@ install steps for a Claude installation starting from an empty `~/.claude`.
 
 `llm-rules/` holds the machine-readable half: the output style, the context
 block, the installer and the score command. `.vale/styles/llm-slop/` holds the
-43 rules the gate measures against, calibrated in
+45 rules the gate measures against, calibrated in
 [CALIBRATION.md](.vale/styles/llm-slop/CALIBRATION.md).
+
+Everything installs under `~/.claude`. No repository holds a copy.
 
 ## 1. Writing
 
@@ -61,16 +63,19 @@ and apply these settings to the fucking shell, I AM TIRED
 applies to every token an assistant emits, including the tokens of the sentence
 deciding whether to invoke a skill. That layer loads last.
 
-| Layer                      | Loads                    | Covered before this rule   |
-|----------------------------|--------------------------|----------------------------|
-| Output style               | Every session, always    | No file present            |
-| `~/.claude/CLAUDE.md`      | Every session, always    | Replies only               |
-| Repository `CLAUDE.md`     | Sessions in that tree    | 8 of 35 repositories       |
-| Skill (`/docs:tone`)       | On invocation            | The full specification     |
-| `Stop` and `PreToolUse` hooks | After the text exists | Replies, `gh pr` bodies    |
+| Layer                         | Reaches                      | Covered before this rule |
+|-------------------------------|------------------------------|--------------------------|
+| Output style                  | The main loop, every session | No file present          |
+| `~/.claude/CLAUDE.md`         | The main loop and subagents  | Replies only             |
+| Skill (`/docs:tone`)          | On invocation                | The full specification   |
+| `Stop` and `PreToolUse` hooks | After the text exists        | Replies, `gh pr` bodies  |
 
 The specification sat in the two layers that load last. This rule moves it to
 the two that load first.
+
+One global ruleset, read in every tree. No repository holds a copy: a rule
+that changes needs one edit, and a repository context file documents that
+repository.
 
 ### Settings
 

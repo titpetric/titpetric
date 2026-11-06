@@ -54,45 +54,4 @@ target.write_text(body)
 PY
 say "global CLAUDE.md" "$claude/CLAUDE.md"
 
-# 5. Every repository under the workspace roots reads the same block from a
-# session started in its tree, without the global file.
-#
-# A repository already carrying a context file keeps every file it has. One
-# carrying none gets a CLAUDE.md holding the block alone, which the repository
-# owner commits or discards.
-roots="${LLM_RULES_ROOTS:-$HOME/workspace/github $HOME/workspace/malta}"
-count=0
-created=""
-for root in $roots; do
-    [ -d "$root" ] || continue
-    for dir in "$root"/*/; do
-        [ -d "$dir/.git" ] || [ -f "$dir/CLAUDE.md" ] || [ -f "$dir/AGENTS.md" ] || continue
-        names="CLAUDE.md AGENTS.md"
-        if [ ! -f "$dir/CLAUDE.md" ] && [ ! -f "$dir/AGENTS.md" ]; then
-            printf '# %s\n' "$(basename "$dir")" > "$dir/CLAUDE.md"
-            created="$created $(basename "$dir")"
-        fi
-        for name in $names; do
-            [ -f "$dir$name" ] || continue
-            python3 - "$dir$name" "$block" <<'PY'
-import pathlib, sys
-target, source = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
-body = target.read_text()
-start, end = "<!-- llm-rules:writing -->", "<!-- /llm-rules:writing -->"
-block = source.read_text().strip()
-if start in body and end in body:
-    head = body[: body.index(start)]
-    tail = body[body.index(end) + len(end) :]
-    body = head + block + tail
-else:
-    body = body.rstrip() + "\n\n" + block + "\n"
-target.write_text(body)
-PY
-            count=$((count + 1))
-        done
-    done
-done
-say "repository files" "$count updated"
-[ -n "$created" ] && say "CLAUDE.md created in" "$(echo $created | tr ' ' ',')"
-
 printf '\nRestart the session, or run /output-style to pick "Writing gate".\n'

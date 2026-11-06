@@ -3,13 +3,21 @@
 The writing gate: forms an assistant fills, loaded before the first token.
 [LLM-RULES.md](../LLM-RULES.md) holds the rule and the prompt that produced it.
 
-| File                | Installs to                              | Loads                      |
-|---------------------|------------------------------------------|----------------------------|
-| `writing.md`        | `~/.claude/output-styles/writing-gate.md` | Every session, always      |
-| `CLAUDE.snippet.md` | `~/.claude/CLAUDE.md` and each repository | Every session, always      |
-| `../.vale/styles/`  | `~/.claude/vale/styles/llm-slop`          | The reply and PR hooks     |
-| `install.sh`        | n/a                                       | n/a                        |
-| `score.sh`          | n/a                                       | n/a                        |
+The gate is one global ruleset under `~/.claude`, read in every tree. No step
+writes into a repository.
+
+| File                | Installs to                               | Reaches                      |
+|---------------------|-------------------------------------------|------------------------------|
+| `writing.md`        | `~/.claude/output-styles/writing-gate.md` | The main loop, every session |
+| `CLAUDE.snippet.md` | `~/.claude/CLAUDE.md`                     | The main loop and subagents  |
+| `../.vale/styles/`  | `~/.claude/vale/styles/llm-slop`          | The reply and PR hooks       |
+| `install.sh`        | n/a                                       | n/a                          |
+| `score.sh`          | n/a                                       | n/a                          |
+
+Two layers because they reach different places. An output style replaces part
+of the main loop's system prompt and a subagent spawned by the `Agent` tool
+never reads it. `~/.claude/CLAUDE.md` loads as context for both. A rule that
+has to hold inside a subagent belongs in `CLAUDE.snippet.md`.
 
 ## Install
 
@@ -19,23 +27,19 @@ cd titpetric
 ./llm-rules/install.sh
 ```
 
-The installer writes five things and names each one:
+The installer writes four things under `~/.claude` and names each one:
 
-1. `~/.claude/output-styles/writing-gate.md`, the forms and the token list.
-2. `~/.claude/vale/styles/llm-slop`, the 43 rules behind the hooks.
-3. `outputStyle: "Writing gate"` in `~/.claude/settings.json`, keeping every
-   other key.
-4. The context block in `~/.claude/CLAUDE.md`, between `<!-- llm-rules:writing -->`
+1. `output-styles/writing-gate.md`, the forms and the token list.
+2. `vale/styles/llm-slop`, the 45 rules behind the hooks.
+3. `outputStyle: "Writing gate"` in `settings.json`, keeping every other key.
+4. The context block in `CLAUDE.md`, between `<!-- llm-rules:writing -->`
    markers a rerun replaces.
-5. The same block in every `CLAUDE.md` and `AGENTS.md` under the workspace
-   roots.
 
 Restart the session afterwards, or run `/output-style` and pick `Writing gate`.
 
-Point the last step somewhere else with an environment variable:
+Point it at another installation with an environment variable:
 
 ```bash
-LLM_RULES_ROOTS="$HOME/src $HOME/work" ./llm-rules/install.sh
 CLAUDE_HOME=/opt/claude ./llm-rules/install.sh
 ```
 
