@@ -1,14 +1,10 @@
 ## Hi there 👋
 
-I'm a systems architect and engineer. I work with Go professionally over
-10 years. I'm currently working on several open source projects pinned
-below.
+I'm a systems architect and engineer. I work with Go professionally over 10 years, and PHP for about 20 years. I'm currently working on several open source projects forming an application platform:
 
-I'm currently working on the following open-source projects:
-
-- [phpscript](https://github.com/titpetric/phpscript) - A performance optimized PHP syntax runtime
-- [oida](https://github.com/titpetric/oida) - in-process telemetry for go applications
-- [task-ui](https://github.com/titpetric/task-ui) - an automation platform for homelabs, team features
+- [phpscript](https://github.com/titpetric/phpscript) - A performance optimized PHP syntax runtime (Go)
+- [oida](https://github.com/titpetric/oida) - in-process telemetry for go applications (Go)
+- [task-ui](https://github.com/titpetric/task-ui) - an automation platform for homelabs, team features (Go + phpscript)
 
 I am currently working on the following closed-source projects:
 
@@ -16,16 +12,8 @@ I am currently working on the following closed-source projects:
 - [incubator.to](https://incubator.to) - Incubator, a place for publishing updates, no-ads, SaaS, non-free
 - [blacksky.digital](https://blacksky.digital) - Custom website and application development, SEO
 
-I am providing consultancy for performance evaluation, testing evaluation, strategic application development.
+I am providing consultancy for performance evaluation, testing evaluation, strategic application development, development process with teams and coding agents. I'm a deep expert in many areas and can handle complexity. Open to full time work on problems.
 
-In addition to that I'm available for integration work:
+Reach out with inqueries:
 
-- Do you want to integrate phpscript as your application server?
-- Do you want to adopt Task UI in your organisation as the self-hosted CI/CD?
-- Are you a virtual hosting provider that would adopt phpscript?
-
-I like terminals but I consider web to be what people use. Using the
-terminal is fine for automation, but in general, people just want the
-good UX and DX experiences, and I try hard to make those happen.
-
-Open to work, reach out if interested. The e-mail is on the left.
+- [me@titpetric.com](mailto:me@titpetric.com).
