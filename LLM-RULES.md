@@ -163,3 +163,28 @@ installation:
 
 Zero findings is the target. A number above zero names the file, the line and
 the rule.
+
+### The sweep
+
+A tree written before the gate reports thousands of findings. One main loop
+cannot hold them: the fix is a fan-out, one document per agent thread.
+
+```bash
+./llm-rules/sweep.sh              # worklists and the prompt, highest count first
+SWEEP_BUDGET=20 ./llm-rules/sweep.sh docs
+```
+
+Each thread reads one worklist, runs `vale` over those files alone, fixes the
+prose and runs it again until the run is silent. The exit condition is the gate
+at zero on that file list. Four properties make it work:
+
+| Property                | Why                                                           |
+|-------------------------|---------------------------------------------------------------|
+| One document per thread | A thread that holds one file keeps every fact in context      |
+| Disjoint file lists     | Two agents editing one file lose one agent's edits            |
+| No whole-tree lint      | A shared counter reports every other thread's work as its own |
+| Prose only              | An identifier, a flag or an anchor changed is a broken tree    |
+
+The gate is the reviewer, because nobody reads the diff. A finding an agent
+cannot reach comes back as a report with the file, the line and the reason,
+never as a suppression and never as a raised baseline.

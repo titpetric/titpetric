@@ -4,3 +4,4 @@
 # go:build and go:test write these.
 bin/
 pkg.cov
+splint.json

@@ -13,6 +13,7 @@ writes into a repository.
 | `../.vale/styles/`  | `~/.claude/vale/styles/llm-slop`          | The reply and PR hooks       |
 | `install.sh`        | n/a                                       | n/a                          |
 | `score.sh`          | n/a                                       | n/a                          |
+| `sweep.sh`          | n/a                                       | n/a                          |
 
 Two layers because they reach different places. An output style replaces part
 of the main loop's system prompt and a subagent spawned by the `Agent` tool
@@ -68,6 +69,36 @@ line in `writing.md`, never a suppression.
 
 It prints every finding, then a row of files, words, findings and findings per
 1000 words. It exits non-zero on any finding.
+
+## Sweep
+
+A tree written before the gate existed reports thousands of findings, and one
+main loop grinding through them runs out of context long before the tree is
+clean. `sweep.sh` partitions the findings and prints the prompt for the agents
+that fix them:
+
+```bash
+./llm-rules/sweep.sh              # the whole tree
+./llm-rules/sweep.sh docs         # one subtree
+SWEEP_BUDGET=20 ./llm-rules/sweep.sh
+```
+
+It writes a worklist per agent under `/tmp/sweep-<repo>/`, highest finding
+count first, and fills each one to `SWEEP_BUDGET` findings. A document over the
+budget takes a worklist to itself. Dispatch one agent per worklist,
+concurrently.
+
+The shape is one document per agent thread. Each thread reads its own file,
+runs `vale` over that file alone, fixes what the run reports and runs it again
+until the run prints nothing. A thread opens no other agent's file, and no
+thread runs the whole-tree lint: a shared counter would make every agent report
+every other agent's work.
+
+Scope is the thing to hold. An agent sweeping prose rewrites sentences and
+leaves the rest alone: the identifiers, the flags, the examples, the heading
+anchors, the rule files and the baseline. The gate is the only reviewer the
+diff gets. The exit condition is that gate at zero, and a finding the agent
+cannot reach that way comes back as a report, never as a suppression.
 
 ## Changing the rules
 
