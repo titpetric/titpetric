@@ -9,12 +9,15 @@ when:
 jobs:
   pull:
     desc: Pull the checkout
+    passthru: true
     cmd: git pull --ff-only
 
   rebase:
     desc: Pull the checkout with --rebase
+    passthru: true
     cmd: git pull --rebase
 
   status:
     desc: Show the branch and changes of the checkout
+    passthru: true
     cmd: git status -sb
