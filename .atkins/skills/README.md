@@ -36,6 +36,7 @@ source file.
 
 | File           | Gate                                | What it does                                            |
 |----------------|-------------------------------------|---------------------------------------------------------|
+| `git.yml`      | `.git`                              | pull, rebase, status                                    |
 | `go.yml`       | `go.mod`                            | generate, fmt, lint, test with coverage, matrix build   |
 | `docker.yml`   | `docker/Dockerfile`                 | buildx build, tag with the newest git tag and `latest`  |
 | `compose.yml`  | `compose.yml`, `docker-compose.yml` | up, down, build, pull, ps, logs                         |
@@ -47,6 +48,7 @@ source file.
 ## What they expect on PATH
 
 The skills call tools rather than vendoring them. Per skill:
+`git.yml` needs `git`;
 `go.yml` needs [splint](https://github.com/titpetric/splint) and
 [gotestsum](https://github.com/gotestyourself/gotestsum);
 `docker.yml`, `compose.yml` and the vale step of `mdox.yml` need `docker`
